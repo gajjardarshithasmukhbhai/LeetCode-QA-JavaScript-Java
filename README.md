@@ -2886,3 +2886,146 @@ const createPrefixSumPatterns = () => ({
 | LinkedList | O(1) | O(n) | O(n) | Dynamic insertions |
 | Bit Manipulation | O(1) | O(1) | O(1) | Efficient operations |
 | Prefix Sum | O(n) | O(1) | O(n) | Range sum queries |
+
+This is the generalized Moore's Voting Algorithm for n/k majority, where k = 3.
+
+**Steps:**
+1. First pass: Find up to two candidates using the same cancellation logic.
+2. Second pass: Verify the counts of both candidates.
+
+---
+
+### 17. First Pass + Second Pass Algorithm
+
+## 🚀 First Pass: Find Potential Candidates
+
+The first pass identifies **at most 2 potential candidates** using the cancellation principle.
+
+```javascript
+function majorityElementII(nums) {
+    let candidate1 = null, candidate2 = null;
+    let count1 = 0, count2 = 0;
+    
+    // FIRST PASS: Find potential candidates
+    for (let num of nums) {
+        if (candidate1 !== null && num === candidate1) {
+            // Found candidate1, increment its count
+            count1++;
+        } else if (candidate2 !== null && num === candidate2) {
+            // Found candidate2, increment its count
+            count2++;
+        } else if (count1 === 0) {
+            // No active candidate1, make current number candidate1
+            candidate1 = num;
+            count1 = 1;
+        } else if (count2 === 0) {
+            // No active candidate2, make current number candidate2
+            candidate2 = num;
+            count2 = 1;
+        } else {
+            // Both candidates are different from current number
+            // Cancel out both candidates (pairwise cancellation)
+            count1--;
+            count2--;
+        }
+    }
+    
+    // At this point, candidate1 and candidate2 are potential majority elements
+}
+```
+
+#### 🔍 First Pass Logic Breakdown:
+
+1. **If current element matches candidate1** → increment count1
+2. **If current element matches candidate2** → increment count2  
+3. **If count1 is 0** → set new candidate1
+4. **If count2 is 0** → set new candidate2
+5. **Otherwise** → decrement both counts (cancellation)
+
+---
+
+### ✅ Second Pass: Verify Candidates
+
+The second pass counts actual occurrences to verify which candidates truly appear > ⌊n/3⌋ times.
+
+```javascript
+function majorityElementII(nums) {
+    // ...First Pass code above...
+    
+    // SECOND PASS: Verify candidates
+    count1 = 0;
+    count2 = 0;
+    
+    // Count actual occurrences of each candidate
+    for (let num of nums) {
+        if (candidate1 !== null && num === candidate1) count1++;
+        if (candidate2 !== null && num === candidate2) count2++;
+    }
+    
+    const result = [];
+    const threshold = Math.floor(nums.length / 3);
+    
+    // Add candidates that appear more than n/3 times
+    if (count1 > threshold) result.push(candidate1);
+    if (count2 > threshold) result.push(candidate2);
+    
+    return result;
+}
+```
+
+#### 🔍 Second Pass Logic:
+
+1. **Reset counters** to 0
+2. **Count actual occurrences** of candidate1 and candidate2
+3. **Check threshold**: Add to result if count > ⌊n/3⌋
+
+---
+
+### 📊 Complete Example Walkthrough
+
+```javascript
+nums = [1, 1, 1, 3, 3, 2, 2, 2];
+n = 8, threshold = Math.floor(8/3) = 2
+```
+
+#### First Pass Trace:
+
+| Step | num | candidate1 | count1 | candidate2 | count2 | Action |
+|------|-----|------------|--------|------------|--------|---------|
+| 1 | 1 | 1 | 1 | null | 0 | Set candidate1 = 1 |
+| 2 | 1 | 1 | 2 | null | 0 | Increment count1 |
+| 3 | 1 | 1 | 3 | null | 0 | Increment count1 |
+| 4 | 3 | 1 | 3 | 3 | 1 | Set candidate2 = 3 |
+| 5 | 3 | 1 | 3 | 3 | 2 | Increment count2 |
+| 6 | 2 | 1 | 2 | 3 | 1 | Cancel both (different from both) |
+| 7 | 2 | 1 | 1 | 3 | 0 | Cancel count1, count2 becomes 0 |
+| 8 | 2 | 1 | 1 | 2 | 1 | Set candidate2 = 2 |
+
+**After First Pass:** candidate1 = 1, candidate2 = 2
+
+#### Second Pass Verification:
+
+```javascript
+// Count occurrences:
+1 appears 3 times > 2 ✅
+2 appears 2 times = 2 ❌ (need > 2)
+3 appears 2 times = 2 ❌
+
+// Result: [1]
+```
+
+---
+
+### 🎯 Key Insights
+
+1. **First Pass Purpose**: Eliminate elements that can't be majority through pairwise cancellation
+2. **Second Pass Purpose**: Verify actual counts since first pass only gives potential candidates
+3. **Why Two Candidates**: At most 2 elements can appear > n/3 times mathematically
+4. **Cancellation Logic**: When we see a different element, we "cancel" existing candidates
+
+---
+
+### ⚡ Time & Space Complexity
+
+- **Time Complexity**: O(n) for first pass + O(n) for second pass = **O(n)**
+- **Space Complexity**: O(1) - only using constant extra variables
