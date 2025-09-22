@@ -3029,3 +3029,109 @@ n = 8, threshold = Math.floor(8/3) = 2
 
 - **Time Complexity**: O(n) for first pass + O(n) for second pass = **O(n)**
 - **Space Complexity**: O(1) - only using constant extra variables
+
+
+## 🎯 When to Use Moore's Voting Algorithm
+
+### 📋 Problem Recognition Patterns
+
+**🔍 Key Indicators:**
+- Looking for element(s) that appear more than a specific threshold
+- Need O(1) space complexity (constant space)
+- Array contains integers or comparable elements
+- Frequency counting with space constraints
+
+### 💡 Classic Use Cases
+
+#### 1. **Majority Element (> n/2)**
+```javascript
+// When exactly one element appears more than half the time
+// Examples: [3,2,3], [2,2,1,1,1,2,2]
+```
+
+#### 2. **Majority Element II (> n/3)**  
+```javascript
+// When finding all elements appearing more than n/3 times
+// Examples: [3,2,3], [1,1,1,3,3,2,2,2]
+```
+
+#### 3. **Generalized n/k Majority**
+```javascript
+// Finding elements appearing more than n/k times
+// At most (k-1) such elements can exist
+```
+
+### 🚀 When Moore's Algorithm is PERFECT
+
+| Scenario | Why Moore's Algorithm? | Alternative Issues |
+|----------|----------------------|-------------------|
+| **Space Constrained** | O(1) space | HashMap uses O(n) space |
+| **Large Arrays** | Single pass, cache-friendly | Sorting takes O(n log n) |
+| **Streaming Data** | Processes elements one by one | Can't store entire dataset |
+| **Memory Limited** | Minimal memory overhead | Other approaches need extra storage |
+
+### ✅ Problem Types That Benefit
+
+#### **Array Problems:**
+- Finding dominant elements in elections/voting
+- Identifying most frequent items in streams
+- Detecting anomalies in sensor data
+- Finding consensus in distributed systems
+
+#### **Real-World Applications:**
+- **Social Media**: Most trending hashtag
+- **E-commerce**: Best-selling product category  
+- **Network Analysis**: Most active server
+- **Data Mining**: Frequent pattern detection
+
+### 🎨 Algorithm Decision Tree
+
+```
+Do you need to find frequent elements?
+├─ Yes
+│  ├─ Space constraint O(1)?
+│  │  ├─ Yes → Moore's Voting ✅
+│  │  └─ No → Consider HashMap
+│  ├─ Need exact frequencies?
+│  │  ├─ Yes → HashMap approach
+│  │  └─ No → Moore's Voting ✅
+│  └─ Threshold > n/2 or n/k?
+│     ├─ Yes → Moore's Voting ✅
+│     └─ No → Consider other approaches
+└─ No → Use different algorithm
+```
+
+### ⚠️ When NOT to Use Moore's Algorithm
+
+| Avoid When | Reason | Better Alternative |
+|------------|---------|-------------------|
+| **Need all frequencies** | Only finds majority | HashMap/Frequency Counter |
+| **Multiple thresholds** | Designed for specific threshold | Sorting + Counting |
+| **Threshold < n/k** | Algorithm doesn't guarantee find | Custom frequency analysis |
+| **Need sorted output** | Doesn't preserve order | Sort + Count |
+
+### 🔥 Problem Variants & Extensions
+
+#### **Classic Problems:**
+- **LeetCode 169**: Majority Element (> n/2)
+- **LeetCode 229**: Majority Element II (> n/3)  
+- **Custom**: Find elements appearing > n/4, n/5, etc.
+
+#### **Advanced Extensions:**
+- **2D Arrays**: Finding majority in matrix rows/columns
+- **Linked Lists**: Majority element in linked structure
+- **Streams**: Online majority detection
+- **Distributed**: Majority across multiple machines
+
+### 🧠 Interview Tips
+
+**When interviewer asks:**
+- "Find the most frequent element" → Check if they mean majority (> n/2)
+- "Optimize space complexity" → Strong hint for Moore's Algorithm
+- "Single pass solution" → Moore's Algorithm fits perfectly
+- "Streaming data" → Moore's Algorithm handles online processing
+
+**Follow-up Questions to Expect:**
+- "What if no majority exists?" → Verification step needed
+- "Can you generalize to n/k?" → Explain k-1 candidates approach
+- "Prove correctness?" → Explain cancellation principle
