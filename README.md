@@ -205,6 +205,87 @@ function removeDuplicates(nums) {
 }
 ```
 
+### ⚠️ Common Misconception Alert
+
+Technically, you can write `left = 0` and `right = left + 1`, but that is **NOT** considered the standard two-pointer approach for this problem. Here's why:
+
+### 🎯 Standard Two-Pointer Approach
+
+#### ✅ Correct Implementation
+```javascript
+left = 0
+right = arr.length - 1
+```
+
+**Why this works:**
+- You begin with the **widest possible container**
+- Moving the **shorter line inward** can potentially increase the area without checking all pairs
+- **Time complexity is O(n)**
+- **Space complexity is O(1)**
+
+### ❌ Non-Standard Implementation
+```javascript
+left = 0
+right = left + 1  // Then move right to the end for each left
+```
+
+**Why this is problematic:**
+- You're basically doing a **brute-force with some optimization**
+- You still have to **iterate right for each left**, so it becomes **O(n²)**
+- It **doesn't qualify** as the optimized two-pointer method
+- **Not leveraging** the two-pointer elimination strategy
+
+### 📊 Complexity Comparison
+
+| Approach | Time Complexity | Space | Pattern |
+|----------|----------------|--------|---------|
+| **Standard Two-Pointer** | **O(n)** | **O(1)** | **Opposite Direction** |
+| Non-Standard (left + 1) | O(n²) | O(1) | Same Direction (Nested) |
+| Brute Force | O(n²) | O(1) | All Combinations |
+
+### 🔍 Key Insights
+
+### Why Start at Ends?
+1. **Maximum Width**: Starting at ends gives the maximum possible width
+2. **Elimination Strategy**: Can eliminate impossible solutions without checking
+3. **Greedy Choice**: Always move the pointer with smaller value (optimal local choice)
+4. **No Backtracking**: Each element is visited at most once
+
+### Mathematical Proof
+```
+For container problem with heights [h₁, h₂, ..., hₙ]:
+- Area = min(h[i], h[j]) × (j - i)
+- If h[i] < h[j], moving j inward can't improve area with current i
+- So we eliminate all combinations (i, j-1), (i, j-2), ... (i, i+1)
+- This gives us O(n) instead of O(n²)
+```
+
+### ✅ Summary
+
+| Implementation | Classification | Efficiency |
+|----------------|----------------|------------|
+| `left = 0, right = arr.length - 1` | ✅ **True two-pointer O(n) solution** | **Optimal** |
+| `right = left + 1` | ❌ **Nested loop, still brute-force** | **Not standard two-pointer** |
+
+### 🎨 Visual Example Needed?
+
+If you want, I can draw a visual example showing why starting at the ends is necessary — it usually clears up the confusion. The key is understanding the **elimination principle** that makes two-pointers work!
+
+### 🧠 Pattern Recognition
+
+**When to use Standard Two-Pointer:**
+- Sorted arrays or can work with ends
+- Looking for pairs/triplets with specific conditions  
+- Need to eliminate impossible combinations
+- Want O(n) or O(n²) instead of O(n²) or O(n³)
+
+**Red Flags (Not Standard Two-Pointer):**
+- Starting adjacent pointers and expanding
+- Nested loops with pointer movement
+- Not eliminating combinations
+- Still checking all possibilities
+
+
 ### 2. Sliding Window
 
 **Description:** A technique that maintains a window (subarray) of elements and slides it across the data structure. The window can be of fixed or variable size. As the window slides, elements are added to one end and removed from the other, maintaining certain properties or constraints.
