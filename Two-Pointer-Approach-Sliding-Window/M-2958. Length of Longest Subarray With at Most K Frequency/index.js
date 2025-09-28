@@ -12,7 +12,7 @@ const maxSubarrayLength = (nums, k) => {
         
         frequencyCount.set(nums[right], (frequencyCount.get(nums[right]) || 0)+1);
 
-        while(frequencyCount.get(nums[left]) > k) {
+        while(frequencyCount.get(nums[right]) > k) {
             
             frequencyCount.set(nums[left], frequencyCount.get(nums[left])-1);
 
@@ -23,5 +23,3 @@ const maxSubarrayLength = (nums, k) => {
 
     return count;
 };
-
-console.log(maxSubarrayLength([3,1,1],1));
