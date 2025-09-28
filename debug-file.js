@@ -1,32 +1,16 @@
-const removeDuplicateLetters = (s) => {
-    let monotonicStack = [];
-    let visited = new Set();          // track if char is already in stack
-    let freq = {};                     // frequency counter
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+const largestPerimeter = (nums) => {
+    nums.sort((a,b) => b-a);
 
-    // count frequencies of each character
-    for (let ch of s) {
-        freq[ch] = (freq[ch] || 0) + 1;
-    }
-
-    for (let i = 0; i < s.length; i++) {
-        let ch = s[i];
-        freq[ch]--;  // use this occurrence
-
-        // if already in stack, skip
-        if (visited.has(ch)) continue;
-
-        // while stack not empty and top is bigger and still appears later
-        while (
-            monotonicStack.length > 0 &&
-            ch < monotonicStack[monotonicStack.length - 1] &&
-            freq[monotonicStack[monotonicStack.length - 1]] > 0
-        ) {
-            visited.delete(monotonicStack.pop());  // unmark popped char
+    for(let i=0;i<nums.length; i++) {
+        if(nums[i]+nums[i+1]>nums[i+2]) {
+            return nums[i]+nums[i+1]+nums[i+2];
         }
-
-        monotonicStack.push(ch);
-        visited.add(ch);
     }
-
-    return monotonicStack.join("");
+    return 0;
 };
+
+console.log(largestPerimeter([1,2,1,10]));
