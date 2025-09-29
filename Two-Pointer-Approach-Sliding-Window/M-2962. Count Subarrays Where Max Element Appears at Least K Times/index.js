@@ -17,4 +17,3 @@ const countSubarrays = (nums, k) => {
     }
     return count;
 };
-console.log(countSubarrays([1,3,2,3,3], 2)); //6
