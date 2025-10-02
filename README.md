@@ -165,6 +165,22 @@ https://docs.google.com/spreadsheets/d/1BvNKHb2fRXxFoaLEjvXzlKXRe3I0byHC6Vco41DE
 |                                 | Heap Sort         | O(n log n)      | O(1)             |                                        |
 | **Trie**                        | Insert/Search     | O(L)            | O(ALPHABET * N)  | L = word length, N = words             |
 
+
+
+
+## Thumb Rules For SuubArray Problems 🤩🤩🤩🤩
+- One global answer → DP (Kadane).
+    - so if we have to find good subarray from the all subarray, that time DP is best.
+
+- Answer per window (min/max) → Deque/Stack.
+    - If we want to track and want to find min, max from subarray level then Stack is best option
+
+- Answer per window (sum-based) → Sliding Window.
+
+- Answer depends on exact sum value → Prefix Sum + Hash.
+
+- Answer depends on uniqueness/frequency → Two Pointers + Hash.
+ 
 ## Algorithms Insights & JavaScript Implementations
 
 ### 1. Two Pointers Technique

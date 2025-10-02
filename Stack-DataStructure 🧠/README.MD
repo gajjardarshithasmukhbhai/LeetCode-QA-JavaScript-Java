@@ -277,3 +277,86 @@ console.log(nextGreaterElement([4, 12, 5, 3, 1, 2, 5, 3, 1, 2, 4, 6]));
 // Output: [12, -1, 6, 5, 2, 5, 6, 4, 2, 4, 6, -1]
 
 ```
+
+# Stack Data Structure Problems - Insights & Approaches
+
+## 1. Remove Adjacent Duplicates (Problem 1047)
+### Approach:
+- Use a stack to track characters
+- Compare current character with top of stack
+- If matching, pop from stack
+- If not matching, push to stack
+- Convert final stack to string
+
+### Key Insights:
+- Stack is perfect for "last seen" comparison problems
+- Time Complexity: O(n)
+- Space Complexity: O(n)
+
+```java
+// Example pattern
+while (i < s.length()) {
+    if (!stack.isEmpty() && stack.peek() == current) {
+        stack.pop();
+    } else {
+        stack.push(current);
+    }
+}
+```
+
+## 2. Basic Calculator (Problem 224)
+### Approach:
+1. Process character by character
+2. Track running result, current number, and sign
+3. Handle special cases:
+   - Numbers (can be multiple digits)
+   - Operators (+/-)
+   - Parentheses (push/pop state)
+
+### Key Insights:
+- Use stack to handle nested parentheses
+- Track state (result, sign) before entering parentheses
+- Process numbers digit by digit (number = number * 10 + digit)
+
+### Common Patterns:
+```javascript
+// Number processing
+if (isDigit(char)) {
+    number = number * 10 + parseInt(char);
+}
+
+// Parentheses handling
+if (char === '(') {
+    stack.push(currentResult);
+    stack.push(currentSign);
+    // Reset state
+}
+if (char === ')') {
+    // Restore previous state
+    result = stack.pop() * result + stack.pop();
+}
+```
+
+## General Tips for Stack Problems:
+1. Consider using stack when:
+   - Need to track last seen elements
+   - Have nested structures (parentheses, brackets)
+   - Need to undo/backtrack operations
+
+2. Common Operations:
+   - push(): Add element
+   - pop(): Remove and return top element
+   - peek()/top(): View top element
+   - isEmpty(): Check if stack is empty
+
+3. Time/Space Complexity:
+   - Most stack operations are O(1)
+   - Usually requires O(n) space for the stack
+   - Total time complexity typically O(n) where n is input length
+
+## Problem-Solving Steps:
+1. Identify if problem needs last-in-first-out (LIFO) operations
+2. Determine what information needs to be stored in stack
+3. Plan push/pop conditions
+4. Handle edge cases (empty input, single element)
+5. Consider space optimization if needed
