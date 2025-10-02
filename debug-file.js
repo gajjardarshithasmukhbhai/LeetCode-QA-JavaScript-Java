@@ -1,16 +1,17 @@
-const removeDuplicates = (s) => {
-    let stack = [];
-    let left = 0;
-    while(left < s.length) {
+var removeStars = function(s) {
+    let chars = Array.from(s)
 
-        while(stack.length && stack[stack.length-1] === s[left]) {
-            stack.pop();
-            ++left;
+    let writer = 0; 
+
+    for(let i = 0; i < s.length; i++){
+        if(chars[i] === "*"){
+            writer--;
+        } else{
+            chars[writer] = chars[i]
+            writer++;
         }
-        stack.push(s[left]);
-        left++;
     }
-    return stack.join('');
+    return chars.slice(0, writer).join('')
 };
 
-console.log(removeDuplicates("abbaca"));
+console.log(removeStars("leet**cod*e"));
