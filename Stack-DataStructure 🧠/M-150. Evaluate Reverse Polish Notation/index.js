@@ -3,7 +3,7 @@ const evalRPN = (tokens) => {
 
     for(let i=0;i<tokens.length;i++) {
         let tokenSign = tokens[i];
-        if(!!["+", "-", "/", "*"].includes(tokenSign)) {
+        if(["+", "-", "/", "*"].includes(tokenSign)) {
             let value1 = stack.pop();
             let value2 = stack.pop();
             if(tokenSign === "+") {
