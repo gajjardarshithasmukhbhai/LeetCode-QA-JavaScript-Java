@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "Statment"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }
