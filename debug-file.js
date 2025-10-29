@@ -1,18 +1,19 @@
-var removeDuplicates = function(nums) {
-    let left = 0;
-    let right = 1;
+const maxProfit = (prices) => {
+    const monotonicStack = [];
 
-    while(right < nums.length) {
+    let result = 0;
 
-        if(nums[left]!=nums[right]) {
-            left++;
-            nums[left] = nums[right];
+    monotonicStack.push(prices[0]);
+
+    for(let i=1;i<prices.length;i++) {
+        if(prices[i] < monotonicStack[monotonicStack.length-1]) {
+            monotonicStack.push(prices[i]);
         }
         else {
-            right++;
+            result = Math.max(result, prices[i] - monotonicStack[monotonicStack.length-1]);
         }
     }
-    return left;
-};
+    return result;
+}
 
-console.log(removeDuplicates([1,1,2]));
+console.log(maxProfit([7,1,5,3,6,4]));
