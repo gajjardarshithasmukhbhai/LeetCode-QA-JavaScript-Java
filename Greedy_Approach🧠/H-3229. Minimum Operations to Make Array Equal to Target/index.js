@@ -12,7 +12,7 @@ const minimumOperations = (nums, target) => {
             resultCount += Math.abs(current);
         }
         else if(Math.abs(prev) < Math.abs(current)) {
-            resultCount += current - prev;
+            resultCount += Math.abs(current - prev);
         }
 
         prev = current;
