@@ -1,24 +1,23 @@
-const minimumOperations = (nums, target) => {
+const zeroFilledSubarray = (nums) => {
 
-    let prev = 0;
-    let differenceOfArray = target.map((value, index) => value - nums[index]);
+    let stack = [];
+    
+    let count = 0;
+    let result = 0;
 
-    let resultCount = 0;
-
-    for(let i=0; i<differenceOfArray.length; i++) {
-        let current = differenceOfArray[i];
-
-        if((current < 0 && prev > 0) || (prev < 0 && current > 0)) {
-            resultCount += Math.abs(current);
+    for(let i=0;i<nums.length;i++) {
+        if(nums[i] === 0) {
+            stack.push(0);
         }
-        else if(Math.abs(prev) < Math.abs(current)) {
-            resultCount += current - prev;
+        if(stack.length && stack[stack.length-1] === nums[i]) {
+            ++count;
         }
-
-        prev = current;
+        if(stack.length && stack[stack.length-1]!==nums[i]) {
+            result += ((count)*(count+1))/2;
+            count = 0;
+            stack = [];
+        }
     }
-
-    return resultCount;
+    return result;
 }
-
-console.log(minimumOperations([1,1,3,4], [4,1,3,2]));
+console.log(zeroFilledSubarray([0,0,0,2,0,0]));
