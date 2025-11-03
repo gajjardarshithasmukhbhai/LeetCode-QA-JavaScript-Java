@@ -1,19 +1,22 @@
-const zeroFilledSubarray = (nums) => {
+const increasingTriplet = (nums) => {
+    let isTripletValid = false;
 
-    let count = 0;
-    let result = 0;
+    let num1 = Infinity;
+    let num2 = Infinity;
 
     for(let i=0;i<nums.length;i++) {
-        if(nums[i] === 0) {
-            count++;
+        if(num1>= nums[i]) {
+            num1 = nums[i];
+            num2 = Infinity
+        }
+        else if(num2 >= nums[i]) {
+            num2 = nums[i];
         }
         else {
-            result += ((count)*(count+1))/2;
-            count = 0;
+            return true;
         }
     }
+    return false;
+};
 
-    // if it ends with zero
-    return result;
-}
-console.log(zeroFilledSubarray([0,0,0,2,0,0]));
+console.log(increasingTriplet([20,100,10,12,5,13]));
