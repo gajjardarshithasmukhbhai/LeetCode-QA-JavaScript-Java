@@ -1,22 +1,17 @@
-const increasingTriplet = (nums) => {
-    let isTripletValid = false;
+const isSubsequence = (s, t) => {
+    let isNotPresent = 1;
+    let splitedValues = t.split('');
 
-    let num1 = Infinity;
-    let num2 = Infinity;
+    let chatCodeAt = -1;
 
-    for(let i=0;i<nums.length;i++) {
-        if(num1>= nums[i]) {
-            num1 = nums[i];
-            num2 = Infinity
+    for(let i=0;i<s.length;i++) {
+        let getIndex = splitedValues.indexOf(s[i], chatCodeAt+1);
+        if(getIndex === -1) {
+            isNotPresent = -1;
         }
-        else if(num2 >= nums[i]) {
-            num2 = nums[i];
-        }
-        else {
-            return true;
-        }
+        chatCodeAt = getIndex;
     }
-    return false;
-};
+    return isNotPresent === 1 ? true: false;
+}
 
-console.log(increasingTriplet([20,100,10,12,5,13]));
+console.log(isSubsequence("abc", "ahbgdc"));
