@@ -2866,7 +2866,239 @@ Flip → 11111010 (negative, so convert to two's complement)
 Result: -6
 ```
 
-## 5. Key Patterns for LeetCode
+## 2. Bit Manipulation Basics
+
+### What is Bit Manipulation?
+- Bit manipulation involves using bitwise operators to perform operations on binary numbers at the bit level.
+- Commonly used bitwise operators: AND (&), OR (|), XOR (^), NOT (~), left shift (<<), right shift (>>).
+
+### Why Use Bit Manipulation?
+- Efficiently solve problems involving binary numbers.
+- Perform operations at the bit level for optimization.
+- Common in competitive programming and technical interviews.
+
+## 3. Common Bit Manipulation Techniques
+
+### 1. Checking if a Number is Odd or Even
+**Technique:** Use bitwise AND with 1.
+```javascript
+function isOdd(num) {
+    return (num & 1) === 1;
+}
+```
+
+### 2. Swapping Two Numbers
+**Technique:** Use XOR swap algorithm.
+```javascript
+function swap(a, b) {
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
+    return [a, b];
+}
+```
+
+### 3. Counting Set Bits
+**Technique:** Use Brian Kernighan's algorithm.
+```javascript
+function countSetBits(n) {
+    let count = 0;
+    while (n !== 0) {
+        n = n & (n - 1);
+        count++;
+    }
+    return count;
+}
+```
+
+## 4. Advanced Bit Manipulation Techniques
+
+### 1. Detecting Power of Two
+**Technique:** Use AND operation between number and number-1.
+```javascript
+function isPowerOfTwo(n) {
+    return n > 0 && (n & (n - 1)) === 0;
+}
+```
+
+### 2. Getting Rightmost Set Bit
+**Technique:** Use AND operation between number and its negative.
+```javascript
+function getRightmostSetBit(n) {
+    return n & -n;
+}
+```
+
+### 3. Turning Off Rightmost Set Bit
+**Technique:** Use AND operation between number and number-1.
+```javascript
+function turnOffRightmostSetBit(n) {
+    return n & (n - 1);
+}
+```
+
+## 5. LeetCode Bit Manipulation Problems
+
+### Problem 1: Swap Two Numbers Without Third Variable
+**Problem:** Swap two numbers a and b without using a third variable.
+
+**Solution using XOR:**
+```javascript
+function swap(a, b) {
+    a = a ^ b;  // Step 1
+    b = a ^ b;  // Step 2: b becomes original a
+    a = a ^ b;  // Step 3: a becomes original b
+    return [a, b];
+}
+```
+
+**Key Insight:** XOR of same numbers equals 0, and XOR with 0 returns the original number.
+- **Time Complexity:** O(1)
+- **Space Complexity:** O(1)
+
+### Problem 2: Check if ith Bit is Set
+**Problem:** Given number n and position i, check if ith bit is set (1) or not.
+
+**Method 1 - Left Shift:**
+```javascript
+function isIthBitSet(n, i) {
+    return (n & (1 << i)) !== 0;
+}
+```
+
+**Method 2 - Right Shift:**
+```javascript
+function isIthBitSet(n, i) {
+    return ((n >> i) & 1) === 1;
+}
+```
+
+**Example:** n=13 (1101), i=2 → Check 2nd bit → Returns true
+- **Time Complexity:** O(1)
+- **Space Complexity:** O(1)
+
+### Problem 3: Set the ith Bit
+**Problem:** Set the ith bit to 1 in number n.
+
+**Solution:**
+```javascript
+function setIthBit(n, i) {
+    return n | (1 << i);
+}
+```
+
+**Example:** n=9 (1001), i=2 → Result: 13 (1101)
+- **Time Complexity:** O(1)
+- **Space Complexity:** O(1)
+
+### Problem 4: Clear the ith Bit
+**Problem:** Clear the ith bit (set to 0) in number n.
+
+**Solution:**
+```javascript
+function clearIthBit(n, i) {
+    return n & ~(1 << i);
+}
+```
+
+**Example:** n=13 (1101), i=2 → Result: 9 (1001)
+- **Time Complexity:** O(1)
+- **Space Complexity:** O(1)
+
+### Problem 5: Toggle the ith Bit
+**Problem:** Toggle the ith bit (0→1, 1→0) in number n.
+
+**Solution:**
+```javascript
+function toggleIthBit(n, i) {
+    return n ^ (1 << i);
+}
+```
+
+**Example:** n=13 (1101), i=1 → Result: 15 (1111)
+- **Time Complexity:** O(1)
+- **Space Complexity:** O(1)
+
+### Problem 6: Remove Last Set Bit (Rightmost)
+**Problem:** Remove the rightmost set bit from number n.
+
+**Solution:**
+```javascript
+function removeLastSetBit(n) {
+    return n & (n - 1);
+}
+```
+
+**Key Pattern:** n & (n-1) always removes the rightmost set bit
+**Example:** n=12 (1100) → Result: 8 (1000)
+- **Time Complexity:** O(1)
+- **Space Complexity:** O(1)
+
+### Problem 7: Check if Number is Power of 2
+**Problem:** Check if given number is a power of 2.
+
+**Solution:**
+```javascript
+function isPowerOfTwo(n) {
+    return n > 0 && (n & (n - 1)) === 0;
+}
+```
+
+**Key Insight:** Powers of 2 have exactly one set bit
+**Example:** 16 (10000) & 15 (01111) = 0 → True
+- **Time Complexity:** O(1)
+- **Space Complexity:** O(1)
+
+### Problem 8: Count Set Bits (Brian Kernighan's Algorithm)
+**Problem:** Count number of set bits in a number.
+
+**Method 1 - Standard Approach:**
+```javascript
+function countSetBits(n) {
+    let count = 0;
+    while (n > 0) {
+        count += (n & 1);  // Check if last bit is set
+        n = n >> 1;        // Right shift by 1
+    }
+    return count;
+}
+```
+
+**Method 2 - Brian Kernighan's Algorithm (Optimized):**
+```javascript
+function countSetBits(n) {
+    let count = 0;
+    while (n !== 0) {
+        n = n & (n - 1);  // Remove rightmost set bit
+        count++;
+    }
+    return count;
+}
+```
+
+**Key Advantage:** Method 2 runs only for number of set bits, not total bits.
+- **Time Complexity:** O(number of set bits)
+- **Space Complexity:** O(1)
+
+## 6. Important Bit Manipulation Patterns
+
+### Pattern Recognition
+1. **XOR Properties:**
+   - a ^ a = 0
+   - a ^ 0 = a
+   - XOR is commutative and associative
+
+2. **AND Properties:**
+   - Used for clearing bits
+   - n & (n-1) removes rightmost set bit
+
+3. **OR Properties:**
+   - Used for setting bits
+   - Always turns bits ON
+
+4. **Shift Operations:**
+   - Left shift (<<): Multiply by 2^k
+   - Right shift (>>): Divide by 2^k
 
 ### Common Bit Manipulation Tricks
 1. **Check if number is power of 2:** `n & (n-1) === 0`
@@ -2874,128 +3106,9 @@ Result: -6
 3. **Turn off rightmost set bit:** `n & (n-1)`
 4. **Count set bits:** Use Brian Kernighan's algorithm
 5. **Swap two numbers:** `a ^= b; b ^= a; a ^= b;`
-
-### Memory Optimization
-- Use bitwise operations instead of arithmetic when possible
-- Right shift instead of division by powers of 2
-- Left shift instead of multiplication by powers of 2
-
-## 6. Problem-Solving Framework
-
-1. **Identify the bit pattern** needed
-2. **Choose appropriate operator** (AND, OR, XOR, shifts)
-3. **Consider edge cases** (overflow, negative numbers)
-4. **Optimize using bit manipulation** properties
-
-### Practice Areas
-- Single Number problems (XOR properties)
-- Bit counting and manipulation
-- Subset generation using bits
-- Binary representation problems
-- Optimization using bit operations
-
-## Common Operations
-```javascript
-// Bit manipulation functions using functional approach
-
-// Check if the bit at position 'pos' is set (1) or not (0)
-const isBitSet = (num, pos) => {
-    // Create a mask with only the pos-th bit set: 1 << pos
-    // AND with num: if bit is set, result is non-zero
-    return (num & (1 << pos)) !== 0;
-};
-
-// Set the bit at position 'pos' to 1
-const setBit = (num, pos) => {
-    // Create mask with pos-th bit set, OR with num
-    // OR operation: 0|1=1, 1|1=1 (sets bit without affecting others)
-    return num | (1 << pos);
-};
-
-// Clear the bit at position 'pos' (set to 0)
-const clearBit = (num, pos) => {
-    // Create mask with all bits 1 except pos-th bit (using NOT)
-    // AND with num: 0&anything=0, 1&1=1 (clears only target bit)
-    return num & ~(1 << pos);
-};
-
-// Toggle the bit at position 'pos' (0→1, 1→0)
-const toggleBit = (num, pos) => {
-    // XOR with mask: 0^1=1, 1^1=0 (flips only the target bit)
-    return num ^ (1 << pos);
-};
-
-// Count number of set bits (1s) in the number
-const countSetBits = (num) => {
-    let count = 0;
-    while (num) {
-        count += num & 1; // Check if least significant bit is 1
-        num >>= 1;        // Right shift to check next bit
-    }
-    return count;
-};
-
-// Check if number is a power of 2
-const isPowerOfTwo = (num) => {
-    // Powers of 2 have exactly one bit set
-    // num & (num-1) clears the rightmost set bit
-    // If only one bit was set, result becomes 0
-    return num > 0 && (num & (num - 1)) === 0;
-};
-
-// Find the single number that appears once (others appear twice)
-const singleNumber = (nums) => {
-    // XOR property: a^a=0, a^0=a
-    // XORing all numbers cancels out duplicates, leaves single number
-    return nums.reduce((result, num) => result ^ num, 0);
-};
-
-// Generate all possible subsets using bit masking
-const getAllSubsets = (nums) => {
-    const result = [];
-    const n = nums.length;
-    
-    // Generate all numbers from 0 to 2^n - 1
-    // Each number represents a subset (bit pattern)
-    for (let i = 0; i < (1 << n); i++) {
-        const subset = [];
-        // Check each bit position
-        for (let j = 0; j < n; j++) {
-            // If j-th bit is set in i, include nums[j] in subset
-            if (i & (1 << j)) {
-                subset.push(nums[j]);
-            }
-        }
-        result.push(subset);
-    }
-    return result;
-};
-
-// Create bit manipulation utilities object
-const createBitManipulation = () => ({
-    isBitSet,
-    setBit,
-    clearBit,
-    toggleBit,
-    countSetBits,
-    isPowerOfTwo,
-    singleNumber,
-    getAllSubsets
-});
-```
-
-## Insights
-- **Time Complexity**: Most operations O(1), counting bits O(log n)
-- **Space Complexity**: O(1) for basic operations
-- **Use Cases**: Efficient storage, fast operations, subset generation
-
-## When to Use
-- When you need extremely fast operations on integers
-- When working with binary representations or flags
-- When memory usage needs to be minimized
-- When dealing with subset generation problems
-- When implementing low-level optimizations
-- When working with permissions or state management
+6. **Check if number is odd:** `n & 1 === 1`
+7. **Divide by 2:** `n >> 1`
+8. **Multiply by 2:** `n << 1`
 
 ## Use Cases
 1. **Permission Systems**: User roles, file permissions (read/write/execute)
