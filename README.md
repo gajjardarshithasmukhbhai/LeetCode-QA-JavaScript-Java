@@ -2714,6 +2714,186 @@ Key concepts:
 - Left shift (<<): Multiplies by 2^n
 - Right shift (>>): Divides by 2^n
 
+### Decimal to Binary Conversion
+**Algorithm:**
+1. Divide the number by 2
+2. Write down the remainder (0 or 1)
+3. Continue until quotient becomes 1
+4. Read remainders from bottom to top
+
+**Example: 7 to Binary**
+```
+7 ÷ 2 = 3, remainder = 1
+3 ÷ 2 = 1, remainder = 1
+1 (stop here)
+Result: 111 (reading from bottom to top)
+```
+
+**Implementation:**
+```javascript
+function decimalToBinary(n) {
+    let result = "";
+    while (n !== 1) {
+        if (n % 2 === 1) {
+            result += "1";
+        } else {
+            result += "0";
+        }
+        n = Math.floor(n / 2);
+    }
+    result += "1";  // Add the final 1
+    return result.split('').reverse().join('');  // Reverse the string
+}
+```
+- **Time Complexity:** O(log₂ n)
+- **Space Complexity:** O(log₂ n)
+
+### Binary to Decimal Conversion
+**Algorithm:**
+1. Start from rightmost bit (index 0)
+2. Multiply each bit by 2^index
+3. Sum all values
+
+**Example: 1101 to Decimal**
+```
+1×2³ + 1×2² + 0×2¹ + 1×2⁰ = 8 + 4 + 0 + 1 = 13
+```
+
+**Implementation:**
+```javascript
+function binaryToDecimal(binaryStr) {
+    let number = 0;
+    let powerOfTwo = 1;
+    for (let i = binaryStr.length - 1; i >= 0; i--) {
+        if (binaryStr[i] === '1') {
+            number += powerOfTwo;
+        }
+        powerOfTwo *= 2;
+    }
+    return number;
+}
+```
+- **Time Complexity:** O(length of string)
+- **Space Complexity:** O(1)
+
+## 2. Computer Storage Format
+
+### Integer Storage (32-bit)
+- Computers store integers as 32-bit binary
+- Example: 13 → stored as `00000000000000000000000000001101`
+- Sign bit (leftmost): 0 = positive, 1 = negative
+
+### Integer Limits
+- **Maximum positive:** 2³¹ - 1 = 2,147,483,647
+- **Minimum negative:** -2³¹ = -2,147,483,648
+
+## 3. One's and Two's Complement
+
+### One's Complement
+Flip all bits in the binary representation.
+```
+13 → 1101 → One's complement → 0010
+```
+
+### Two's Complement
+1. Find one's complement
+2. Add 1 to the result
+
+**Used for storing negative numbers in computer memory**
+```
+-13 representation:
+1. 13 in binary: 1101
+2. One's complement: 0010
+3. Add 1: 0011 (but with sign bit set)
+```
+
+## 4. Bitwise Operators
+
+### AND Operator (&)
+**Rule:** All bits must be 1 to get 1
+```
+13 & 7:
+  1101 (13)
+& 0111 (7)
+------
+  0101 (5)
+```
+
+### OR Operator (|)
+**Rule:** At least one bit must be 1 to get 1
+```
+13 | 7:
+  1101 (13)
+| 0111 (7)
+------
+  1111 (15)
+```
+
+### XOR Operator (^)
+**Rule:** Odd number of 1s → 1, Even number of 1s → 0
+```
+13 ^ 7:
+  1101 (13)
+^ 0111 (7)
+------
+  1010 (10)
+```
+
+### Right Shift (>>)
+**Formula:** `x >> k = x / 2^k` (integer division)
+```
+13 >> 1 = 6    (13 / 2¹)
+13 >> 2 = 3    (13 / 2²)
+13 >> 4 = 0    (13 / 2⁴)
+```
+
+### Left Shift (<<)
+**Formula:** `x << k = x * 2^k`
+```
+13 << 1 = 26   (13 * 2¹)
+```
+⚠️ **Warning:** Can cause overflow with large numbers
+
+### NOT Operator (~)
+**Process:**
+1. Flip all bits
+2. If result is negative, store in two's complement format
+
+```
+~5:
+5 → 00000101
+Flip → 11111010 (negative, so convert to two's complement)
+Result: -6
+```
+
+## 5. Key Patterns for LeetCode
+
+### Common Bit Manipulation Tricks
+1. **Check if number is power of 2:** `n & (n-1) === 0`
+2. **Get rightmost set bit:** `n & -n`
+3. **Turn off rightmost set bit:** `n & (n-1)`
+4. **Count set bits:** Use Brian Kernighan's algorithm
+5. **Swap two numbers:** `a ^= b; b ^= a; a ^= b;`
+
+### Memory Optimization
+- Use bitwise operations instead of arithmetic when possible
+- Right shift instead of division by powers of 2
+- Left shift instead of multiplication by powers of 2
+
+## 6. Problem-Solving Framework
+
+1. **Identify the bit pattern** needed
+2. **Choose appropriate operator** (AND, OR, XOR, shifts)
+3. **Consider edge cases** (overflow, negative numbers)
+4. **Optimize using bit manipulation** properties
+
+### Practice Areas
+- Single Number problems (XOR properties)
+- Bit counting and manipulation
+- Subset generation using bits
+- Binary representation problems
+- Optimization using bit operations
+
 ## Common Operations
 ```javascript
 // Bit manipulation functions using functional approach
