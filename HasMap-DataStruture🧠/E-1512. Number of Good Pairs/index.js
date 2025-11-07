@@ -1,14 +1,21 @@
-const numIdenticalPairs = (nums) => {
-    const countFreq = new Map();
-    
-    let result = 0;
-    for(let i=0;i<nums.length;i++) {
-        countFreq.set(nums[i], (countFreq.get(nums[i]) || 0)+1);
+let containsNearbyDuplicate = (nums, k) => {
+    let map = new Map();
+
+    for(let i=0;i<nums.length; i++) {
+        map.set(i, nums[i]);
     }
 
-    for(let [key, value] of countFreq) {
-        result += ((value)*(value-1))/2
-    }
+    let resultOfKeys = [...map].sort((a,b) => {
+        if(a[1]!==b[1]) {
+            return a[1]-b[1];
+        }
+        return a[0]-b[0];
+    });
 
-    return result;
+    for(let i=0;i<resultOfKeys.length;i=i+2) {
+        if(resultOfKeys[i+1][0]-resultOfKeys[i][0]) {
+            return true;
+        }
+    }   
+    return false;
 };
