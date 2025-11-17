@@ -12,11 +12,9 @@ const kLengthApart = (nums, k) => {
     console.log('position: ', position);
 
     for(let j=1;j<position.length;j++) {
-        if((position[j] - position[j-1]) < k) {
+        if((position[j] - position[j-1]) <= k) {
             return false;
         }
     }
     return true;
 };
-
-console.log(kLengthApart([1,0,0,0,1,0,0,1], 2));
