@@ -28,5 +28,3 @@ const findEvenNumbers = (digits) => {
     helper([]);
     return Array.from(result).sort((a, b) => a - b);
 };
-
-console.log(findEvenNumbers([2,1,3,0]));
