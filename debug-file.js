@@ -1,32 +1,15 @@
-const findEvenNumbers = (digits) => {
-    let result = new Set();
-    let freq = new Map();
-
-    for(let i=0;i<digits.length;i++) {
-        freq.set(digits[i], (freq.get(digits[i]) || 0)+1);
-    }
-    const helper = (stack) => {
-        if(stack.length === 3) {
-            result.add(stack[0]*100+stack[1]*10+stack[2]);
-            return;
+const canAliceWin = (nums) => {
+    let singleDigitSum = 0;
+    let doubleDigitSum = 0;
+    for(let i=0;i<nums.length;i++) {
+        if(nums[i].toString().length === 1) {
+            singleDigitSum +=nums[i];
         }
-
-        for(let [digit, count] of [...freq]) {
-            if(count === 0) continue;
-            
-            if(stack.length === 0 && digit === 0) continue;
-            
-            if(stack.length === 2 && digit%2 !==0) continue; 
-            
-            freq.set(digit, count-1);
-            stack.push(digit);
-            helper(stack);
-            stack.pop();
-            freq.set(digit, count);
-        }
+        if(nums[i].toString().length === 2) {
+            doubleDigitSum += nums[i];
+        }   
     }
-    helper([]);
-    return Array.from(result).sort((a, b) => a - b);
+    return singleDigitSum!==doubleDigitSum;
 };
 
-console.log(findEvenNumbers([2,1,3,0]));
+console.log(canAliceWin([5,5,5,25]));
