@@ -1,19 +1,22 @@
-var kthCharacter = function (k) {
-    let word = 'a';
-    
-    function generateWord(word, k) {
-        while (word.length < k) {
-            let generatedWord = ''
-            for (let ch of word) {
-                generatedWord += String.fromCharCode((ch.charCodeAt() + 1) % 123) // handle out of bound for z
-            }
-            return generateWord(word + generatedWord, k)
+const kthGrammar = (n, k) => {
+    // n --> Row
+    // k --> Position of Array
+
+    const helper = (row, string) => {
+        
+        if(row === n) {
+            return parseInt(string[k-1]);
         }
-        return word;
+        let tempString = "";
+        for(let i=0;i<string.length;i++) {
+            if(string[i] === "0") {
+                tempString += "01";
+            }
+            if(string[i] === "1") {
+                tempString+= "10";
+            }
+        }
+        return helper(row+1, tempString);
     }
-    return generateWord(word, k)[k - 1]
+    return helper(1, "0");
 };
-
-
-
-console.log(kthCharacter(5));
