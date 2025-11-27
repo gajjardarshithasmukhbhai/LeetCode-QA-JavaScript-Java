@@ -1,11 +1,19 @@
-const test = () => {
-    let sum = 0;
-    const helper = (num) => {
-        if(num > 5) {
-            return num;
-        }
-        return num+helper(num+1);
+const countOfSteps = (target) => {
+  let count = 0;
+  
+  const helper = (sum) => {
+    if(sum === target) {
+      count++;
+      return;
     }
-    return helper(0);
+    if(sum>target) {
+      return;
+    }
+    helper(sum+1);
+    helper(sum+2);
+  }
+  // count, sum
+  helper(0);
+  return count;
 }
-console.log(test());
+console.log(countOfSteps(4));
