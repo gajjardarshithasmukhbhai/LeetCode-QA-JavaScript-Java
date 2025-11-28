@@ -133,6 +133,155 @@ https://docs.google.com/spreadsheets/d/1BvNKHb2fRXxFoaLEjvXzlKXRe3I0byHC6Vco41DE
   h = floor(log2(n))
   ```
 
+## Modular Remainder Trick for Large Number Problems
+
+This guide explains one of the most powerful concepts used in LeetCode and competitive programming:
+
+> **Building large numbers using modular arithmetic without ever storing the actual number.**
+
+This trick helps solve problems where numbers grow too large, especially when digits are added one by one.
+
+---
+
+### 💡 Core Formula
+
+When constructing a number digit-by-digit:
+
+```
+newNumber = oldNumber * 10 + digit
+```
+
+But instead of storing the large number, we only maintain the **remainder** when divided by a number `k`:
+
+```
+remainder = (remainder * 10 + digit) % k
+```
+
+### ✔ Why it works?
+
+Because of the modular arithmetic rule:
+
+```
+(a * 10 + b) % k = ((a % k) * 10 + b) % k
+```
+
+This means we **do not need the full number**, only its remainder.
+
+---
+
+### 🎯 Where This Trick Is Used
+
+#### 1. **Checking divisibility of huge numbers**
+
+When a number cannot fit in JavaScript/other languages.
+
+Example: "987654321987654321..." (big string input)
+
+Use:
+
+```
+remainder = (remainder * 10 + digit) % k
+```
+
+---
+
+#### 2. **LeetCode 1015 – Smallest Integer Divisible by K**
+
+Numbers made of only 1's:
+
+```
+1, 11, 111, 1111, ...
+```
+
+Use:
+
+```
+remainder = (remainder * 10 + 1) % k
+```
+
+---
+
+#### 3. **Handling repeating remainders**
+
+If remainder repeats, a loop is detected.
+Used in problems like:
+
+* Fraction to Recurring Decimal
+* Detecting repeating decimal cycles
+* BFS digit-building problems
+
+---
+
+#### 4. **Rolling Hash (Rabin-Karp)**
+
+String hashing uses:
+
+```
+hash = (hash * base + charCode) % mod
+```
+
+Same logic, different base.
+
+---
+
+#### 5. **Modular DP & Prefix Sum Problems**
+
+Whenever you see expressions like:
+
+```
+(prefixSum % k)
+```
+
+This mathematical trick often plays a role.
+
+---
+
+#### 🧠 Intuition
+
+Think of remainder as a way to "compress" the number.
+
+Example:
+
+```
+ number = 111111111111111111 (too big!)
+ remainder = number % k      (always small)
+```
+
+Instead of tracking the exploding number, the remainder stays within:
+
+```
+0 to k-1
+```
+
+This makes it safe, fast, and memory-efficient.
+
+---
+
+#### 📘 Mini Example
+
+Find the remainder of constructing "1111" modulo 7:
+
+```
+start: remainder = 1 % 7 = 1
+step2: remainder = (1*10 + 1) % 7 = 4
+step3: remainder = (4*10 + 1) % 7 = 6
+step4: remainder = (6*10 + 1) % 7 = 5
+```
+
+We never built the full number 1111.
+
+---
+
+#### 🚀 Key Benefits
+
+* Avoids overflow
+* Avoids BigInt
+* Keeps calculations fast
+* Works for digit-by-digit number building
+* Solves many "string → number" problems
+
+---
+
 ### Algorithm & Data Structure Complexity Table
 
 | Algorithm / Data Structure      | Operation         | Time Complexity | Space Complexity | Notes                                 |
